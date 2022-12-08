@@ -9,7 +9,7 @@ public class Login {
         System.out.println("欢迎来到酆都夜游录，为你的角色起个名字吧");
         Scanner scanner=new Scanner(System.in);
         String name=scanner.nextLine();
-        Player role =new Player(name);
+        Player role =new Player(name,1,1);
         System.out.println("hello "+name+"！欢迎来到酆都夜游录！！！");
 
         return role;

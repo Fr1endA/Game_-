@@ -2,7 +2,7 @@ package character.game;
 
 public class Ghost extends Character {
     //有参创建Ghost
-    double presenceProbability=1.0;
+    public double presenceProbability=1.0;
     //增长函数
     private double intensify(int chapter,int level){
         double intense=0;
@@ -21,7 +21,7 @@ public class Ghost extends Character {
             if(level==8){
                 return 3;
             }
-            intense=0.9+0.08*level;
+            intense=1.2+0.12*level;
         }
         return intense;
     }

@@ -1,9 +1,6 @@
 package episode.game;
 
-import character.game.EliteGhost;
-import character.game.Ghost;
-import character.game.Normal_Ghost;
-import character.game.Player;
+import character.game.*;
 
 public class Episode {
     private int levelNum=1;
@@ -25,10 +22,12 @@ public class Episode {
         //当调用Episode构造器时，已知层次和章节，自动生成相应的鬼魂。
         //chapter1&&chapter2:1-7为鬼魂和随机事件等，8为章节奖励。
         //chapter3:1-8均为鬼魂、随机事件等。
-        double thresholdEGhost=0.2+(chapter-1)*0.1+levelNum*0.05;
+
+        double thresholdEGhost=new EliteGhost(null,chapter,levelNum).presenceProbability;
         double thresholdEvent=0.15;
         double randomGhost = Math.random();
         double randomEvent =Math.random();
+        double randomGhostSpecific=Math.random();
         //非BOSS关卡
         if (!(((chapter==1||chapter==2)&levelNum==7)||(chapter==3&levelNum==8))) {
             //如果没发生特殊事件，进入鬼魂对战
@@ -42,9 +41,17 @@ public class Episode {
                 }
                 //否则与普通鬼魂对战
                 else{
-                    Normal_Ghost ghost1 = new Normal_Ghost("普通鬼魂"+levelNum+"|"+chapter,chapter,levelNum);
-                    episodeData.ghosts[chapter-1][levelNum-1]=ghost1;
-                    this.ghost=ghost1;
+                    //平等地发生两类不同的普通鬼魂（攻与防）
+                    if(randomGhostSpecific>0.5){
+                        Normal_Ghost ghost1 = new NormalAggressive("普通-攻击型"+levelNum+"|"+chapter,chapter,levelNum);
+                        episodeData.ghosts[chapter-1][levelNum-1]=ghost1;
+                        this.ghost=ghost1;
+                    }
+                    else{
+                        Normal_Ghost ghost1 = new NormalStrong("普通-防御型"+levelNum+"|"+chapter,chapter,levelNum);
+                        episodeData.ghosts[chapter-1][levelNum-1]=ghost1;
+                        this.ghost=ghost1;
+                    }
                     countNormal++;
                 }
             }
